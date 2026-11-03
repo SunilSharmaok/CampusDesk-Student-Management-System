@@ -67,3 +67,12 @@ Example student JSON:
 - Never commit real database credentials, passwords or private API keys to a public repository.
 - The original upstream project is distributed under the licence included in `LICENSE`. Keep that notice when redistributing.
 - This enhanced version adds dashboard UI, filtering, CSV export, validation and update functionality.
+
+
+## Deployment configuration fix
+
+The Netlify build must use the Render API URL at build time. `netlify.toml` now sets `REACT_APP_API_URL` to the deployed CampusDesk backend. If you configure it in Netlify Site settings instead, use the same value and trigger a fresh deploy (clear cache and deploy if an old build remains).
+
+In Render, set `CLIENT_URL` to the exact deployed Netlify site origin (for example, `https://your-site-name.netlify.app`, with no trailing slash). Keep `MONGODB_URI` set to the MongoDB Atlas connection string. Do not commit `.env` files or credentials.
+
+After redeployment, open the site, press Ctrl+Shift+R, then check the browser Network tab for successful `GET /students`, `GET /attendance`, and `GET /results` requests. The dashboard now shows API connected only after all three list requests return arrays successfully.
